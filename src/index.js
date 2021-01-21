@@ -29,14 +29,20 @@ dotenv.config();
     if (domains.length > 0) {
       domainList = domains.map(d => d.id).join(',')
     }
+    const primaryDomainList = domains.filter(d => d.primary)
+    let primaryDomain = 'n/a'
+    if (primaryDomainList.length > 0) {
+      primaryDomain = primaryDomainList[0].id
+    }
 
     return {
       siteUuid,
-      domainList
+      domainList,
+      primaryDomain
     }
   })
 
-  const csvOut = resps.map(resp => `"${resp.siteUuid}","${resp.domainList}"`).join('\r\n')
+  const csvOut = resps.map(resp => `"${resp.siteUuid}","${resp.domainList}","${resp.primaryDomain}"`).join('\r\n')
   console.log(csvOut)
 
   process.exit();
